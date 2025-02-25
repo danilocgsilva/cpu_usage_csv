@@ -6,7 +6,7 @@ read -p "Write the file name where it was written tne mpstat ouput: " MPSTAT_OUT
 export DATA_SIZE=$(echo $CPU_COUNT + 3 | bc)
 export DATA_EXCESS=$(echo "$DATA_SIZE + 1" | bc)
 DATA_MEASUREMENTS=$(echo $(echo $(wc $MPSTAT_OUTPUT -l | awk '{print $1}') - $DATA_EXCESS | bc ) / $DATA_SIZE | bc)
-echo "--> $DATA_MEASUREMENTS - $DATA_EXCESS - $DATA_SIZE"
+# echo "--> $DATA_MEASUREMENTS - $DATA_EXCESS - $DATA_SIZE"
 
 get_line_to_print() {
     export PROCESSOR_NUMBER=$1
