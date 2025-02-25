@@ -1,12 +1,12 @@
 #!/bin/bash
 
 read -p "Enter the number of processors: " CPU_COUNT
-read -p "Write the file name where it was written tne mpstat ouput: " MPSTAT_OUTPUT
+read -p "Write the file name where it was written the mpstat ouput: " MPSTAT_OUTPUT
+read -p "Write the csv separator: " CSV_SEPARATOR
 
 export DATA_SIZE=$(echo $CPU_COUNT + 3 | bc)
 export DATA_EXCESS=$(echo "$DATA_SIZE + 1" | bc)
 DATA_MEASUREMENTS=$(echo $(echo $(wc $MPSTAT_OUTPUT -l | awk '{print $1}') - $DATA_EXCESS | bc ) / $DATA_SIZE | bc)
-# echo "--> $DATA_MEASUREMENTS - $DATA_EXCESS - $DATA_SIZE"
 
 get_line_to_print() {
     export PROCESSOR_NUMBER=$1
@@ -23,13 +23,13 @@ get_data() {
 
 print_line() {
     export CPU_COUNT=$1
-    echo -ne "cpu$1;\t"
+    echo -ne "cpu$1$CSV_SEPARATOR"
     for i in $(seq $(echo $DATA_MEASUREMENTS | bc)); do
         export LINE_TO_GET_DATA=$(get_line_to_print $1 $i)
         # echo -n $LINE_TO_GET_DATA
         get_data $LINE_TO_GET_DATA
         if [ $i -ne $(echo $DATA_MEASUREMENTS | bc) ]; then
-            echo -ne ";\t"
+            echo -ne "$CSV_SEPARATOR"
         fi
     done
     echo ""

@@ -12,3 +12,7 @@ mpstat -P ALL 1 15 > data.log
 This will create a file called `data.log` where data will be recorded.
 
 2. Execute `makecsv.sh`, answering the questions.
+
+Then, you can port the processor data usage, put on a table and plot a graph.
+
+![Sample image](sample.png)
